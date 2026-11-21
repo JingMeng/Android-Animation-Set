@@ -4,10 +4,10 @@ buildscript {
     
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.2.2'
+        classpath 'com.android.tools.build:gradle:8.2.1'
         
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -18,7 +18,28 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
+    }
+}
+
+// Configure namespaces explicitly for all included Android modules.
+def moduleNamespaces = [
+    'app': 'com.ocnyang.androidanimationset',
+    'constraint-animation': 'com.ocnyang.constraint_animation',
+    'drawable-animation': 'com.ocnyang.drawableanimation',
+    'property-animation': 'com.ocnyang.propertyanimation',
+    'reveal-animation': 'com.ocnyang.revealanimation',
+    'ripple-animation': 'com.ocnyang.rippleanimation',
+    'state-animation': 'com.ocnyang.stateanimation',
+    'transition-animation': 'com.ocnyang.transitionanimation',
+    'vector-animation': 'com.ocnyang.vectoranimation',
+    'view-animation': 'com.ocnyang.viewanimation'
+]
+subprojects { module ->
+    ['com.android.application', 'com.android.library'].each { pluginId ->
+        module.plugins.withId(pluginId) {
+            module.android.namespace = moduleNamespaces[module.name]
+        }
     }
 }
 
